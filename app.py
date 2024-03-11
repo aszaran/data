@@ -165,6 +165,3 @@ df_display = df_display.rename(columns={'NS':'Yield'})
 st.title('Yield Curve')
 st.pyplot(fig)
 st.table(df_display)
-
-
-
