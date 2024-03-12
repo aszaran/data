@@ -59,6 +59,9 @@ df_limpio = df_final.dropna(thresh=3)
 fecha_a_analizar = st.sidebar.date_input('Fecha de análisis', df_limpio.index[-1])
 fecha_a_analizar = pd.Timestamp(fecha_a_analizar)
 
+maturity_analisis = maturity_analysis = st.sidebar.text_input('Ingrese Maturity para análisis:', value='5.0')
+maturity_analisis = float(maturity_analisis)
+
 
 # Extraer la fila correspondiente 
 fila_analisis = df_limpio.loc[fecha_a_analizar]
@@ -108,6 +111,7 @@ sf = sf.style.format({'Maturity': '{:,.2f}'.format,'Yield': '{:,.4%}'})
 
 df['NS'] =(β0)+(β1*((1-np.exp(-df['Maturity']/λ))/(df['Maturity']/λ)))+(β2*((((1-np.exp(-df['Maturity']/λ))/(df['Maturity']/λ)))-(np.exp(-df['Maturity']/λ))))
 
+
 df['Residual'] =  (df['Yield'] - df['NS'])**2
 df22 = df[['Maturity','Yield','NS','Residual']]  
 
@@ -131,6 +135,7 @@ c = fmin(myval, [0.01, 0.00, -0.01, 1.0])
 
 df = df.copy()
 df['NS'] =(β0)+(β1*((1-np.exp(-df['Maturity']/λ))/(df['Maturity']/λ)))+(β2*((((1-np.exp(-df['Maturity']/λ))/(df['Maturity']/λ)))-(np.exp(-df['Maturity']/λ))))
+ns_analisis = (β0) + (β1 * ((1 - np.exp(-maturity_analisis / λ)) / (maturity_analisis / λ))) + (β2 * ((((1 - np.exp(-maturity_analisis / λ)) / (maturity_analisis / λ))) - (np.exp(-maturity_analisis / λ))))
 sf4 = df.copy()
 sf5 = sf4.copy()
 sf5['Y'] = round(sf4['Yield']*100,4)
@@ -152,16 +157,20 @@ y = sf5["N"]
 plt.plot(x, y, color="orange", label="Svensson model")
 plt.scatter(x, y, marker="o", c="orange")
 plt.scatter(X, Y, marker="o", c="blue")
+
+# Agregar el punto de análisis
+plt.scatter(maturity_analisis, ns_analisis * 100, color='green', marker='o', label=f'Analysis at {maturity_analisis} years')
+
+
 plt.xlabel('Maturity (years)',fontsize=fontsize)
 plt.ylabel('Yield (%)',fontsize=fontsize)
 plt.legend(loc="lower right")
 plt.grid()
-st.pyplot(fig)
-
-df_display = df[['Maturity','NS']]
-df_display = df_display.rename(columns={'NS':'Yield'})
 
 
 st.title('Yield Curve')
 st.pyplot(fig)
-st.table(df_display)
+st.info('El valor del rendimiento para el bono con maturity de ' + str(maturity_analisis) + ' años es de ' + str(round(ns_analisis*100,2)) + '%')
+
+
+
