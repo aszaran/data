@@ -251,7 +251,7 @@ plt.grid()
 plt.show()
 
 # Graficar en streamlit
-st.pyplot.title('Curva de rendimientos')
+st.title('Curva de rendimientos')
 st.pyplot(fig_int_USD)
 df_display = df[['Maturity','NS']]
 df_display = df_display.rename(columns={'NS':'Yield'})
