@@ -334,6 +334,10 @@ plt.show()
 st.title('Curva de rendimientos')
 st.pyplot(fig_int_USD)
 
+# Input de streamlit para calcular el retorno teorico de una madurez
+st.sidebar.title('Bonos internacionales en USD')
+maturity_USD_input = st.sidebar.number_input('Madurez (en años)', min_value=0.0, max_value=30.0, value=5.0)
+
 # Validar la entrada del usuario y calcular el rendimiento teórico
 try:
     # Cálculo del rendimiento teórico utilizando la función definida previamente
@@ -348,10 +352,6 @@ except ValueError:
 
 # Graficar en streamlit
 st.pyplot(fig_local_PYG)
-
-# Input de streamlit para calcular el retorno teorico de una madurez
-st.sidebar.title('Bonos internacionales en USD')
-maturity_USD_input = st.sidebar.number_input('Madurez (en años)', min_value=0.0, max_value=30.0, value=5.0)
 
 # Input de streamlit para calcular el retorno teorico de una madurez
 st.sidebar.title('Bonos locales en PYG')
