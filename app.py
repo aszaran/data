@@ -84,6 +84,9 @@ df_int_USD_yield.set_index('Fecha', inplace=True)
 df_int_USD_yield.sort_index(inplace=True)
 df_int_USD_yield.head()
 
+############### Eliminar fila rara
+df_int_USD_yield.drop(columns=['Unnamed: 2'], inplace=True)
+
 # %%
 # Crear df para guardar los rendimientos de los bonos
 df_local_PYG_yield = None
