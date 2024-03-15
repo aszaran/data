@@ -253,10 +253,6 @@ plt.show()
 # Graficar en streamlit
 st.title('Curva de rendimientos')
 st.pyplot(fig_int_USD)
-df_display = df[['Maturity','NS']]
-df_display = df_display.rename(columns={'NS':'Yield'})
-# st.pyplot(fig_int_USD)
-st.table(df_display)
 
 # Input de streamlit para calcular el retorno teorico de una madurez
 st.sidebar.title('Seleccionar madurez para bonos USD')
@@ -354,10 +350,6 @@ plt.show()
 # Graficar en streamlit
 st.title('Curva de rendimientos')
 st.pyplot(fig_local_PYG)
-df_display = df[['Maturity','NS']]
-df_display = df_display.rename(columns={'NS':'Yield'})
-# st.pyplot(fig_local_PYG)
-st.table(df_display)
 
 # Input de streamlit para calcular el retorno teorico de una madurez
 st.sidebar.title('Seleccionar madurez para bonos PYG')
