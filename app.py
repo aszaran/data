@@ -104,9 +104,9 @@ df_local_PYG_yield.sort_index(inplace=True)
 df_local_PYG_yield.head()
 
 # %%
-# Input de streamlit para calcular el retorno teorico de una madurez
-st.sidebar.title('Bonos internacionales en USD')
-maturity_USD_input = st.sidebar.number_input('Madurez (en años)', min_value=0.0, max_value=30.0, value=5.0)
+# Seleccionar ultima fecha disponible para analizar datos
+date_int_USD = st.sidebar.date_input('Selecciona una fecha para bonos USD', df_int_USD_yield.index[-1])
+date_int_USD = pd.Timestamp(date_int_USD)
 # Extraer la fila correspondiente 
 data_int_USD = df_int_USD_yield.loc[date_int_USD]
 # Transponer la fila para convertir en columna
@@ -118,7 +118,7 @@ df_int_USD_analysis['Yield'] = df_int_USD_analysis['Yield'] / 100
 # df_int_USD_analysis
 
 # %%
- Seleccionar ultima fecha disponible para analizar datos
+# Seleccionar ultima fecha disponible para analizar datos
 date_local_PYG = st.sidebar.date_input('Selecciona una fecha para bonos PYG', df_local_PYG_yield.index[-1])
 date_local_PYG = pd.Timestamp(date_local_PYG)
 # Extraer la fila correspondiente
@@ -327,10 +327,6 @@ plt.legend(loc="lower right")
 plt.grid()
 plt.show()
 
-# Seleccionar ultima fecha disponible para analizar datos
-date_int_USD = st.sidebar.date_input('Selecciona una fecha para bonos USD', df_int_USD_yield.index[-1])
-date_int_USD = pd.Timestamp(date_int_USD)
-
 # Graficar en streamlit
 st.title('Curva de rendimientos')
 st.pyplot(fig_int_USD)
@@ -349,6 +345,10 @@ except ValueError:
 
 # Graficar en streamlit
 st.pyplot(fig_local_PYG)
+
+# Input de streamlit para calcular el retorno teorico de una madurez
+st.sidebar.title('Bonos internacionales en USD')
+maturity_USD_input = st.sidebar.number_input('Madurez (en años)', min_value=0.0, max_value=30.0, value=5.0)
 
 # Input de streamlit para calcular el retorno teorico de una madurez
 st.sidebar.title('Bonos locales en PYG')
