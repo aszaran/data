@@ -104,9 +104,6 @@ df_local_PYG_yield.sort_index(inplace=True)
 df_local_PYG_yield.head()
 
 # %%
-# Seleccionar ultima fecha disponible para analizar datos
-date_int_USD = st.sidebar.date_input('Selecciona una fecha', df_int_USD_yield.index[-1])
-date_int_USD = pd.Timestamp(date_int_USD)
 # Extraer la fila correspondiente 
 data_int_USD = df_int_USD_yield.loc[date_int_USD]
 # Transponer la fila para convertir en columna
@@ -118,9 +115,6 @@ df_int_USD_analysis['Yield'] = df_int_USD_analysis['Yield'] / 100
 # df_int_USD_analysis
 
 # %%
-# Seleccionar ultima fecha disponible para analizar datos
-date_local_PYG = st.sidebar.date_input('Selecciona una fecha', df_local_PYG_yield.index[-1])
-date_local_PYG = pd.Timestamp(date_local_PYG)
 # Extraer la fila correspondiente
 data_local_PYG = df_local_PYG_yield.loc[date_local_PYG]
 # Transponer la fila para convertir en columna
@@ -250,26 +244,6 @@ plt.legend(loc="lower right")
 plt.grid()
 plt.show()
 
-# Graficar en streamlit
-st.title('Curva de rendimientos')
-st.pyplot(fig_int_USD)
-
-# Input de streamlit para calcular el retorno teorico de una madurez
-st.sidebar.title('Seleccionar madurez para bonos USD')
-maturity_USD_input = st.sidebar.number_input('Madurez (en años)', min_value=0.0, max_value=30.0, value=5.0)
-
-# Validar la entrada del usuario y calcular el rendimiento teórico
-try:
-    # Cálculo del rendimiento teórico utilizando la función definida previamente
-    yield_USD = ((β0_USD) +
-                (β1_USD * ((1 - np.exp(-maturity_USD_input / λ_USD)) / (maturity_USD_input / λ_USD))) +
-                (β2_USD * ((((1 - np.exp(-maturity_USD_input / λ_USD)) / (maturity_USD_input / λ_USD))) - (np.exp(-maturity_USD_input / λ_USD))))
-    )
-    # Renderiza el resultado en Streamlit
-    st.write(f'Rendimiento teórico para madurez de {maturity_USD_input} años en bonos USD: {yield_USD:.2%}')
-except ValueError:
-    st.error('Por favor ingresa un valor numérico válido para la madurez.')
-
 # %%
 # Inicializar coeficientes del modelo de regresion
 β0_PYG = 0.01
@@ -347,12 +321,39 @@ plt.legend(loc="lower right")
 plt.grid()
 plt.show()
 
+# Seleccionar ultima fecha disponible para analizar datos
+date_int_USD = st.sidebar.date_input('Selecciona una fecha para bonos USD', df_int_USD_yield.index[-1])
+date_int_USD = pd.Timestamp(date_int_USD)
+
 # Graficar en streamlit
-st.title('Curva de rendimientos PYG')
+st.title('Curva de rendimientos')
+st.pyplot(fig_int_USD)
+
+# Input de streamlit para calcular el retorno teorico de una madurez
+st.sidebar.title('Bonos internacionales en USD')
+maturity_USD_input = st.sidebar.number_input('Madurez (en años)', min_value=0.0, max_value=30.0, value=5.0)
+
+# Validar la entrada del usuario y calcular el rendimiento teórico
+try:
+    # Cálculo del rendimiento teórico utilizando la función definida previamente
+    yield_USD = ((β0_USD) +
+                (β1_USD * ((1 - np.exp(-maturity_USD_input / λ_USD)) / (maturity_USD_input / λ_USD))) +
+                (β2_USD * ((((1 - np.exp(-maturity_USD_input / λ_USD)) / (maturity_USD_input / λ_USD))) - (np.exp(-maturity_USD_input / λ_USD))))
+    )
+    # Renderiza el resultado en Streamlit
+    st.write(f'Rendimiento teórico para madurez de {maturity_USD_input} años en bonos USD: {yield_USD:.2%}')
+except ValueError:
+    st.error('Por favor ingresa un valor numérico válido para la madurez.')
+
+# Seleccionar ultima fecha disponible para analizar datos
+date_local_PYG = st.sidebar.date_input('Selecciona una fecha para bonos PYG', df_local_PYG_yield.index[-1])
+date_local_PYG = pd.Timestamp(date_local_PYG)
+
+# Graficar en streamlit
 st.pyplot(fig_local_PYG)
 
 # Input de streamlit para calcular el retorno teorico de una madurez
-st.sidebar.title('Seleccionar madurez para bonos PYG')
+st.sidebar.title('Bonos locales en PYG')
 maturity_PYG_input = st.sidebar.number_input('Madurez (en años)', min_value=0.0, max_value=20.0, value=5.0)
 
 # Validar la entrada del usuario y calcular el rendimiento teórico
