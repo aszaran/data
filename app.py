@@ -115,7 +115,7 @@ df_int_USD_analysis = data_int_USD.transpose().to_frame()
 df_int_USD_analysis.columns = ['Yield']
 # Convertir el yield a porcentaje
 df_int_USD_analysis['Yield'] = df_int_USD_analysis['Yield'] / 100
-df_int_USD_analysis
+# df_int_USD_analysis
 
 # %%
 # Seleccionar ultima fecha disponible para analizar datos
@@ -129,7 +129,7 @@ df_local_PYG_analysis = data_local_PYG.transpose().to_frame()
 df_local_PYG_analysis.columns = ['Yield']
 # Convertir el Yield a porcentaje
 df_local_PYG_analysis['Yield'] = df_local_PYG_analysis['Yield'] / 100
-df_local_PYG_analysis
+# df_local_PYG_analysis
 
 # %%
 # Agregar al df la madurez de los bonos
@@ -137,7 +137,7 @@ df_int_USD_analysis['Maturity'] = (pd.to_datetime(df_int_USD_maturity['Fecha de 
                                    pd.to_datetime(date_int_USD, dayfirst= True)
 ).values
 df_int_USD_analysis['Maturity'] = (df_int_USD_analysis['Maturity'].dt.days / 360)
-df_int_USD_analysis
+# df_int_USD_analysis
 
 # %%
 # Agregar al df la madurez de los bonos
@@ -145,21 +145,21 @@ df_local_PYG_analysis['Maturity'] = (pd.to_datetime(df_local_PYG_maturity['Fecha
                                      pd.to_datetime(date_local_PYG, dayfirst= True)
 ).values
 df_local_PYG_analysis['Maturity'] = (df_local_PYG_analysis['Maturity'].dt.days / 360)
-df_local_PYG_analysis
+# df_local_PYG_analysis
 
 # %%
 # Copiar base de datos para el modelo de regresion
 dd_USD = df_int_USD_analysis.copy()
 dd_USD.sort_values('Maturity', inplace=True)
 df_USD = dd_USD.copy()
-df_USD.style.format({'Maturity': '{:,.2f}'.format,'Yield': '{:,.2%}'})
+# df_USD.style.format({'Maturity': '{:,.2f}'.format,'Yield': '{:,.2%}'})
 
 # %%
 # Ordenar de mayor a menor madurez
 dd_PYG = df_local_PYG_analysis.copy()
 dd_PYG.sort_values('Maturity', inplace=True)
 df_PYG = dd_PYG.copy()
-df_PYG.style.format({'Maturity': '{:,.2f}'.format,'Yield': '{:,.2%}'})
+# df_PYG.style.format({'Maturity': '{:,.2f}'.format,'Yield': '{:,.2%}'})
 
 # %%
 # Inicializar coeficientes del modelo de regresion
@@ -174,13 +174,13 @@ df_USD['NS'] = (
     (β1_USD*((1-np.exp(-df_USD['Maturity']/λ_USD))/(df_USD['Maturity']/λ_USD)))+
     (β2_USD*((((1-np.exp(-df_USD['Maturity']/λ_USD))/(df_USD['Maturity']/λ_USD)))-(np.exp(-df_USD['Maturity']/λ_USD))))
 )
-df_USD.style.format({'Maturity': '{:,.0f}'.format,'Yield': '{:,.2%}','NS': '{:,.2%}'})
+# df_USD.style.format({'Maturity': '{:,.0f}'.format,'Yield': '{:,.2%}','NS': '{:,.2%}'})
 
 # %%
 # Calcular el error cuadratico como la diferencia entre los retornos observados y los retornos teoricos
 df_USD['SE'] =  (df_USD['Yield'] - df_USD['NS'])**2
 df22_USD = df_USD[['Maturity','Yield','NS','SE']]  
-df22_USD.style.format({'Maturity': '{:,.0f}'.format,'Yield': '{:,.2%}','NS': '{:,.2%}','SE': '{:,.9f}'})
+# df22_USD.style.format({'Maturity': '{:,.0f}'.format,'Yield': '{:,.2%}','NS': '{:,.2%}','SE': '{:,.9f}'})
 
 # %%
 # Definición de una función para calcular la suma de residuos cuadrados
@@ -224,7 +224,7 @@ sf5_USD = sf4_USD.copy()
 sf5_USD['Y'] = round(sf4_USD['Yield'] * 100, 4)
 sf5_USD['N'] = round(sf4_USD['NS'] * 100, 4)
 sf4_USD = sf4_USD.style.format({'Maturity': '{:,.2f}'.format, 'Yield': '{:,.2%}', 'NS': '{:,.2%}'})
-sf4_USD
+# sf4_USD
 
 # %%
 # Definición de algunas variables adicionales
@@ -282,7 +282,7 @@ df_PYG['NS'] = ((β0_PYG)+
                 (β1_PYG*((1-np.exp(-df_PYG['Maturity']/λ_PYG))/(df_PYG['Maturity']/λ_PYG)))+
                 (β2_PYG*((((1-np.exp(-df_PYG['Maturity']/λ_PYG))/(df_PYG['Maturity']/λ_PYG)))-(np.exp(-df_PYG['Maturity']/λ_PYG))))
 )
-df_PYG.style.format({'Maturity': '{:,.0f}'.format,'Yield': '{:,.2%}','NS': '{:,.2%}'})
+# df_PYG.style.format({'Maturity': '{:,.0f}'.format,'Yield': '{:,.2%}','NS': '{:,.2%}'})
 
 # %%
 # Calcular el error como la diferencia entre los retornos observados y los retornos teoricos elevada al cuadrado
