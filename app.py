@@ -311,8 +311,8 @@ print("[β0, β1, β2, λ]=", [c_PYG[0].round(2), c_PYG[1].round(2), c_PYG[2].ro
 # Actualización de los rendimientos teóricos utilizando los coeficientes ajustados
 df_PYG = df_PYG.copy()
 df_PYG['NS'] = ((β0_PYG)+
-                (β1_PYG*((1-np.exp(-df_PYG['Maturity']/λ_pyg))/(df_PYG['Maturity']/λ_PYG)))+
-                (β2_PYG*((((1-np.exp(-df_PYG['Maturity']/λ_pyg))/(df_PYG['Maturity']/λ_PYG)))-(np.exp(-df_PYG['Maturity']/λ_PYG))))
+                (β1_PYG*((1-np.exp(-df_PYG['Maturity']/λ_PYG))/(df_PYG['Maturity']/λ_PYG)))+
+                (β2_PYG*((((1-np.exp(-df_PYG['Maturity']/λ_PYG))/(df_PYG['Maturity']/λ_PYG)))-(np.exp(-df_PYG['Maturity']/λ_PYG))))
 )
 
 # %%
@@ -348,7 +348,7 @@ plt.grid()
 plt.show()
 
 # Graficar en streamlit
-st.title('Curva de rendimientos')
+st.title('Curva de rendimientos PYG')
 st.pyplot(fig_local_PYG)
 
 # Input de streamlit para calcular el retorno teorico de una madurez
