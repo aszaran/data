@@ -366,5 +366,32 @@ try:
 except ValueError:
     st.error('Por favor ingresa un valor numérico entre 0 y 20.')
 
+# Graficar rendimientos
+fig_USD_yield = plt.figure(figsize=(12, 8))
+for column in df_int_USD_yield.columns:
+    if column == 'Unnamed: 2':
+        continue
+    plt.plot(df_int_USD_yield.index, df_int_USD_yield[column], label=column)
+plt.title("Bonos USD, mercado internacional")
+plt.ylabel("Rendimiento (%)")
+plt.legend(loc="best")
+plt.grid(True)
+plt.show()
+# Graficar en streamlit
+st.pyplot(fig_USD_yield)
+
+
+# Graficar rendimientos
+fig_PYG_yield = plt.figure(figsize=(12, 8))
+for column in df_local_PYG_yield.columns:
+    plt.plot(df_local_PYG_yield.index, df_local_PYG_yield[column], label=column)
+plt.title("Bonos PYG, mercado local")
+plt.ylabel("Rendimiento (%)")
+plt.legend(loc="best")
+plt.grid(True)
+plt.show()
+# Graficar en streamlit
+st.pyplot(fig_PYG_yield)
+
 
 
