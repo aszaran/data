@@ -132,8 +132,6 @@ df_local_PYG_analysis = data_local_PYG.transpose().to_frame()
 df_local_PYG_analysis.columns = ['Yield']
 # Convertir el Yield a porcentaje
 df_local_PYG_analysis['Yield'] = df_local_PYG_analysis['Yield'] / 100
-############### Eliminar fila rara
-df_int_USD_analysis.drop(index=['Unnamed: 2'], inplace=True)
 # df_local_PYG_analysis
 
 # %%
