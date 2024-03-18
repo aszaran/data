@@ -346,7 +346,7 @@ try:
                 (β2_USD * ((((1 - np.exp(-maturity_USD_input / λ_USD)) / (maturity_USD_input / λ_USD))) - (np.exp(-maturity_USD_input / λ_USD))))
     )
     # Renderiza el resultado en Streamlit
-    st.write(f'Rendimiento teórico para madurez de {maturity_USD_input} años en bonos USD: {yield_USD:.2%}')
+    st.write(f'Rendimiento teórico para una madurez de {maturity_USD_input} años: {yield_USD:.2%}')
 except ValueError:
     st.error('Por favor ingresa un valor numérico válido para la madurez.')
 
@@ -365,7 +365,7 @@ try:
                 (β2_PYG * ((((1 - np.exp(-maturity_PYG_input / λ_PYG)) / (maturity_PYG_input / λ_PYG))) - (np.exp(-maturity_PYG_input / λ_PYG))))
     )
     # Renderiza el resultado en Streamlit
-    st.write(f'Rendimiento teórico para madurez de {maturity_PYG_input} años en bonos USD: {yield_PYG:.2%}')
+    st.write(f'Rendimiento teórico una madurez de {maturity_PYG_input} años: {yield_PYG:.2%}')
 except ValueError:
     st.error('Por favor ingresa un valor numérico entre 0 y 20.')
 
