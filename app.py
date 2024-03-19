@@ -409,11 +409,9 @@ plt.grid(True)
 plt.show()
 
 st.title('Mercado internacional')
+st.subheader('Rendimiento')
 st.pyplot(fig_USD_yield)
-
-# Graficar en streamlit
-st.title('Mercado internacional')
-
+st.subheader('Curva de rendimientos')
 st.pyplot(fig_int_USD)
 
 # Input de streamlit para calcular el retorno teorico de una madurez
@@ -433,7 +431,9 @@ except ValueError:
     st.error('Por favor ingresa un valor numérico válido para la madurez.')
 
 st.title('Mercado local')
+st.subheader('Rendimiento')
 st.pyplot(fig_PYG_yield)
+st.subheader('Curva de rendimientos')
 st.pyplot(fig_local_PYG)
 
 # Input de streamlit para calcular el retorno teorico de una madurez
