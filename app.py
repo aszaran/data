@@ -397,4 +397,70 @@ plt.show()
 st.pyplot(fig_PYG_yield)
 
 
+# %% [markdown]
+# # Riesgo pais
 
+# %%
+# Cargar el excel
+df_EMBI = pd.read_excel('EMBI.xlsx')
+#eliminar filas vacias
+df_EMBI = df_EMBI.dropna(how='all')
+# Eliminar columnas vacias
+df_EMBI = df_EMBI.dropna(axis=1, how='all')
+# df_EMBI.head()
+
+# %%
+# Nombrar las columnas
+nuevas_columnas = df_EMBI.iloc[0]  # Selecciona la primera fila como nombres de columnas
+df_EMBI = df_EMBI[1:]  # Elimina la primera fila del DataFrame
+df_EMBI = df_EMBI.set_axis(nuevas_columnas, axis=1)  # Establece los nombres de las columnas
+# df_EMBI.head()
+
+# Configurar fecha como datetime
+# df_EMBI['Fecha'] = pd.to_datetime(df['Fecha'], format= 'mixed', dayfirst=True)
+
+# %%
+# Configurar la columna fecha como indice
+df_EMBI = df_EMBI.set_index('Fecha')
+# df_EMBI.set_index("Fecha", inplace=True)
+# Reemplazar valores no numéricos por NaN
+df_EMBI = df_EMBI.apply(pd.to_numeric, errors='coerce')
+# df_EMBI.head()
+
+# %%
+fig_EMBI = plt.figure(figsize=(12, 8))
+for column in df_EMBI.columns:
+    if column in ['Argentina', 'Salvador', 'Bolivia']:
+        continue
+    plt.plot(df_EMBI.index, df_EMBI[column], label=column)
+plt.title("Riesgo pais")
+plt.ylabel("EMBI (%)")
+plt.legend(loc="best")
+plt.grid(True)
+plt.show()
+# Graficar en streamlit
+st.pyplot(fig_EMBI)
+
+# %%
+fig_EMBI_latam = plt.figure(figsize=(12, 8))
+for column in df_EMBI.columns:
+    if column in ['Latinoamérica', 'Paraguay']:
+        plt.plot(df_EMBI.index, df_EMBI[column], label=column)
+plt.title("Riesgo pais")
+plt.ylabel("EMBI (%)")
+plt.legend(loc="best")
+plt.grid(True)
+plt.show()
+st.pyplot(fig_EMBI_latam)
+
+# %%
+fig_EMBI_PAR = plt.figure(figsize=(12, 8))
+for column in df_EMBI.columns:
+    if column == 'Paraguay':
+        plt.fill_between(df_EMBI.index, df_EMBI[column], label=column)
+plt.title("Riesgo pais")
+plt.ylabel("EMBI (%)")
+plt.legend(loc="best")
+plt.grid(True)
+plt.show()
+st.pyplot(fig_EMBI_PAR)
