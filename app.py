@@ -330,45 +330,6 @@ plt.legend(loc="lower right")
 plt.grid()
 plt.show()
 
-# Graficar en streamlit
-st.title('Curva de rendimientos')
-st.pyplot(fig_int_USD)
-
-# Input de streamlit para calcular el retorno teorico de una madurez
-st.sidebar.title('Bonos internacionales en USD')
-maturity_USD_input = st.sidebar.number_input('Madurez (en años)', min_value=0.0, max_value=30.0, value=5.0)
-
-# Validar la entrada del usuario y calcular el rendimiento teórico
-try:
-    # Cálculo del rendimiento teórico utilizando la función definida previamente
-    yield_USD = ((β0_USD) +
-                (β1_USD * ((1 - np.exp(-maturity_USD_input / λ_USD)) / (maturity_USD_input / λ_USD))) +
-                (β2_USD * ((((1 - np.exp(-maturity_USD_input / λ_USD)) / (maturity_USD_input / λ_USD))) - (np.exp(-maturity_USD_input / λ_USD))))
-    )
-    # Renderiza el resultado en Streamlit
-    st.write(f'Rendimiento teórico para una madurez de {maturity_USD_input} años: {yield_USD:.2%}')
-except ValueError:
-    st.error('Por favor ingresa un valor numérico válido para la madurez.')
-
-# Graficar en streamlit
-st.pyplot(fig_local_PYG)
-
-# Input de streamlit para calcular el retorno teorico de una madurez
-st.sidebar.title('Bonos locales en PYG')
-maturity_PYG_input = st.sidebar.number_input('Madurez (en años)', min_value=0.0, max_value=20.0, value=5.0)
-
-# Validar la entrada del usuario y calcular el rendimiento teórico
-try:
-    # Cálculo del rendimiento teórico utilizando la función definida previamente
-    yield_PYG = ((β0_PYG) +
-                (β1_PYG * ((1 - np.exp(-maturity_PYG_input / λ_PYG)) / (maturity_PYG_input / λ_PYG))) +
-                (β2_PYG * ((((1 - np.exp(-maturity_PYG_input / λ_PYG)) / (maturity_PYG_input / λ_PYG))) - (np.exp(-maturity_PYG_input / λ_PYG))))
-    )
-    # Renderiza el resultado en Streamlit
-    st.write(f'Rendimiento teórico una madurez de {maturity_PYG_input} años: {yield_PYG:.2%}')
-except ValueError:
-    st.error('Por favor ingresa un valor numérico entre 0 y 20.')
-
 # Graficar rendimientos
 fig_USD_yield = plt.figure(figsize=(12, 8))
 for column in df_int_USD_yield.columns:
@@ -380,8 +341,7 @@ plt.ylabel("Rendimiento (%)")
 plt.legend(loc="best")
 plt.grid(True)
 plt.show()
-# Graficar en streamlit
-st.pyplot(fig_USD_yield)
+
 
 
 # Graficar rendimientos
@@ -393,8 +353,6 @@ plt.ylabel("Rendimiento (%)")
 plt.legend(loc="best")
 plt.grid(True)
 plt.show()
-# Graficar en streamlit
-st.pyplot(fig_PYG_yield)
 
 
 # %% [markdown]
@@ -427,22 +385,6 @@ df_EMBI = df_EMBI.set_index('Fecha')
 df_EMBI = df_EMBI.apply(pd.to_numeric, errors='coerce')
 # df_EMBI.head()
 
-'''
-# %%
-fig_EMBI = plt.figure(figsize=(12, 8))
-for column in df_EMBI.columns:
-    if column in ['Argentina', 'Salvador', 'Bolivia']:
-        continue
-    plt.plot(df_EMBI.index, df_EMBI[column], label=column)
-plt.title("Riesgo pais")
-plt.ylabel("EMBI (%)")
-plt.legend(loc="best")
-plt.grid(True)
-plt.show()
-# Graficar en streamlit
-st.pyplot(fig_EMBI)
-'''
-
 # %%
 fig_EMBI_latam = plt.figure(figsize=(12, 8))
 for column in df_EMBI.columns:
@@ -453,7 +395,7 @@ plt.ylabel("EMBI (%)")
 plt.legend(loc="best")
 plt.grid(True)
 plt.show()
-st.pyplot(fig_EMBI_latam)
+
 
 # %%
 fig_EMBI_PAR = plt.figure(figsize=(12, 8))
@@ -465,4 +407,51 @@ plt.ylabel("EMBI (%)")
 plt.legend(loc="best")
 plt.grid(True)
 plt.show()
+
+st.title('Mercado internacional')
+st.pyplot(fig_USD_yield)
+
+# Graficar en streamlit
+st.title('Mercado internacional')
+
+st.pyplot(fig_int_USD)
+
+# Input de streamlit para calcular el retorno teorico de una madurez
+st.sidebar.title('Rendimiento teórico')
+maturity_USD_input = st.sidebar.number_input('Ingresa una madurez (en años) para bonos USD', min_value=0.0, max_value=30.0, value=5.0)
+
+# Validar la entrada del usuario y calcular el rendimiento teórico
+try:
+    # Cálculo del rendimiento teórico utilizando la función definida previamente
+    yield_USD = ((β0_USD) +
+                (β1_USD * ((1 - np.exp(-maturity_USD_input / λ_USD)) / (maturity_USD_input / λ_USD))) +
+                (β2_USD * ((((1 - np.exp(-maturity_USD_input / λ_USD)) / (maturity_USD_input / λ_USD))) - (np.exp(-maturity_USD_input / λ_USD))))
+    )
+    # Renderiza el resultado en Streamlit
+    st.write(f'El rendimiento teórico para una madurez de {maturity_USD_input} años es de: {yield_USD:.2%}')
+except ValueError:
+    st.error('Por favor ingresa un valor numérico válido para la madurez.')
+
+st.title('Mercado local')
+st.pyplot(fig_PYG_yield)
+st.pyplot(fig_local_PYG)
+
+# Input de streamlit para calcular el retorno teorico de una madurez
+st.sidebar.title('Rendimiento teórico')
+maturity_PYG_input = st.sidebar.number_input('Ingresa una madurez (en años) para bonos PYG', min_value=0.0, max_value=20.0, value=5.0)
+
+# Validar la entrada del usuario y calcular el rendimiento teórico
+try:
+    # Cálculo del rendimiento teórico utilizando la función definida previamente
+    yield_PYG = ((β0_PYG) +
+                (β1_PYG * ((1 - np.exp(-maturity_PYG_input / λ_PYG)) / (maturity_PYG_input / λ_PYG))) +
+                (β2_PYG * ((((1 - np.exp(-maturity_PYG_input / λ_PYG)) / (maturity_PYG_input / λ_PYG))) - (np.exp(-maturity_PYG_input / λ_PYG))))
+    )
+    # Renderiza el resultado en Streamlit
+    st.write(f'El rendimiento teórico una madurez de {maturity_PYG_input} años es de: {yield_PYG:.2%}')
+except ValueError:
+    st.error('Por favor ingresa un valor numérico entre 0 y 20.')
+
+st.title('Prima de riesgo pais')
+st.pyplot(fig_EMBI_latam)
 st.pyplot(fig_EMBI_PAR)
