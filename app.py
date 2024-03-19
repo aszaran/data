@@ -427,6 +427,7 @@ df_EMBI = df_EMBI.set_index('Fecha')
 df_EMBI = df_EMBI.apply(pd.to_numeric, errors='coerce')
 # df_EMBI.head()
 
+'''
 # %%
 fig_EMBI = plt.figure(figsize=(12, 8))
 for column in df_EMBI.columns:
@@ -440,6 +441,7 @@ plt.grid(True)
 plt.show()
 # Graficar en streamlit
 st.pyplot(fig_EMBI)
+'''
 
 # %%
 fig_EMBI_latam = plt.figure(figsize=(12, 8))
